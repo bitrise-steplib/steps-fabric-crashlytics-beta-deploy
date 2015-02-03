@@ -57,11 +57,15 @@ inputs:
   - 
     mapped_to: STEP_CRASHLYTICS_EMAIL_LIST
     title: "Notify: Emails"
+    description: |
+      Optional list of individual addresses (comma-separated)﻿
     is_expand: false
     is_required: false
   - 
     mapped_to: STEP_CRASHLYTICS_GROUP_ALIASES_LIST
     title: "Notify: Group Aliases"
+    description: |
+      Optional list of group aliases from web dashboard (comma-separated)
     is_expand: false
     is_required: false
   - 
