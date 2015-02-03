@@ -56,15 +56,48 @@ inputs:
     mapped_to: STEP_CRASHLYTICS_EMAIL_LIST
     title: "Notify: Emails"
     is_expand: false
-    is_required: true
+    is_required: false
   - 
     mapped_to: STEP_CRASHLYTICS_GROUP_ALIASES_LIST
     title: "Notify: Group Aliases"
     is_expand: false
-    is_required: true
+    is_required: false
   - 
     mapped_to: STEP_CRASHLYTICS_RELEASE_NOTES
     title: "Release Notes"
     is_expand: false
     is_required: false
+  - 
+    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATE_URL
+    title: "Certificate Private Key file URL"
+    description: |
+      .p12 Private Key file's URL
+    is_required: true
+    is_expand: true
+  - 
+    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATE_PASSPHRASE
+    title: "Certificate Private Key file Passphrase"
+    description: |
+      .p12 Private Key file's Passphrase
+    is_required: false
+    is_expand: true
+  -
+    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATES_DIR
+    title: "Certificates Directory Path"
+    description: |
+      Directory where this step stores the Certificate Private Key (.p12).
+    value: "${HOME}/cert_activator_certs"
+    is_expand: true
+    is_required: true
+  -
+    mapped_to: STEP_CERT_ACTIVATOR_KEYCHAIN_PATH
+    title: "Keychain Path"
+    value: "${HOME}/Library/Keychains/login.keychain"
+    is_expand: true
+    is_required: true
+  -
+    mapped_to: STEP_CERT_ACTIVATOR_KEYCHAIN_PSW
+    title: "Keychain Password / passphrase"
+    is_expand: false
+    is_required: true
 outputs: []

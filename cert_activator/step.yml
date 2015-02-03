@@ -1,0 +1,49 @@
+name: "Certificate Private Key Activator"
+description: |
+  Downloads and activates a .p12 certificate private key file.
+
+  You can import into the *login* keychain (default) or specify
+  a brand new keychain which will be created before the
+  certificate private key import is performed.
+website: https://github.com/bitrise-io/steps-download-and-activate-osx-certificate-private-key
+fork_url: https://github.com/bitrise-io/steps-download-and-activate-osx-certificate-private-key
+source:
+  git: https://github.com/bitrise-io/steps-download-and-activate-osx-certificate-private-key.git
+host_os_tags:
+  - "osx-10.10"
+is_requires_admin_user: false
+inputs:
+  - 
+    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATE_URL
+    title: "Certificate Private Key file URL"
+    description: |
+      .p12 Private Key file's URL
+    is_required: true
+    is_expand: true
+  - 
+    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATE_PASSPHRASE
+    title: "Certificate Private Key file Passphrase"
+    description: |
+      .p12 Private Key file's Passphrase
+    is_required: false
+    is_expand: true
+  -
+    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATES_DIR
+    title: "Certificates Directory Path"
+    description: |
+      Directory where this step stores the Certificate Private Key (.p12).
+    value: "${HOME}/cert_activator_certs"
+    is_expand: true
+    is_required: true
+  -
+    mapped_to: STEP_CERT_ACTIVATOR_KEYCHAIN_PATH
+    title: "Keychain Path"
+    value: "${HOME}/Library/Keychains/login.keychain"
+    is_expand: true
+    is_required: true
+  -
+    mapped_to: STEP_CERT_ACTIVATOR_KEYCHAIN_PSW
+    title: "Keychain Password / passphrase"
+    is_expand: false
+    is_required: true
+
