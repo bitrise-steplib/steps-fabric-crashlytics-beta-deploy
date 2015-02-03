@@ -70,10 +70,10 @@ printf "%s" "${STEP_CRASHLYTICS_RELEASE_NOTES}" > "${CONFIG_release_notes_pth}"
 
 
 if [ ! -z "${STEP_CRASHLYTICS_EMAIL_LIST}" ] ; then
-	_param_emails='-emails "${STEP_CRASHLYTICS_EMAIL_LIST}"'
+	_param_emails="-emails \"${STEP_CRASHLYTICS_EMAIL_LIST}\""
 fi
 if [ ! -z "${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}" ] ; then
-	_param_groups='-groupAliases ﻿"${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}"'
+	_param_groups="-groupAliases ﻿\"${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}\""
 fi
 
 #
