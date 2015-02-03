@@ -2,12 +2,14 @@ name: "Fabric / Crashlytics deployer"
 description: |
   Deploys to Fabric / Crashlytics beta testing service.
 
-  ## How to setup your Xcode project for Fabric / Crashlytics beta testing?
+  ## How to setup your Xcode project for [Fabric](https://get.fabric.io/) / Crashlytics beta testing?
 
   * Register a Fabric account at [https://get.fabric.io/](https://get.fabric.io/).
   * Add Fabric & Crashlytics to your Xcode project as described when you first sign into your Fabric account
   * After your first Fabric & Crashlytics app setup the app should be listed on [https://fabric.io](https://fabric.io)
   * You should also test that everything works correctly with a manual version upload: just Create an Archive in Xcode and if the Fabric menu bar app is running it'll show an upload popup
+
+  Your app is now ready to be deployed with this Step!
 website: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
 fork_url: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
 source:
