@@ -7,9 +7,10 @@ CONFIG_build_secret="${STEP_CRASHLYTICS_BUILD_SECRET}"
 CONFIG_ipa_pth="${STEP_CRASHLYTICS_IPA_PATH}"
 CONFIG_emails_list="${STEP_CRASHLYTICS_EMAIL_LIST}"
 CONFIG_group_aliases_list="${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}"
-CONFIG_release_notes_pth=""
+CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
 
 # STEP_CRASHLYTICS_RELEASE_NOTES -> save to file and provide path
+printf "%s" "${STEP_CRASHLYTICS_RELEASE_NOTES}" > "${CONFIG_release_notes_pth}"
 
 # TEST
 _TMP_cert_handler_dir_path="${HOME}/steps-download-and-activate-osx-certificate-private-key"
