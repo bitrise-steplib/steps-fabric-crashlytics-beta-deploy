@@ -11,5 +11,21 @@ CONFIG_release_notes_pth=""
 
 # STEP_CRASHLYTICS_RELEASE_NOTES -> save to file and provide path
 
+# TEST
+_TMP_cert_handler_dir_path="${HOME}/steps-download-and-activate-osx-certificate-private-key"
+git clone https://github.com/bitrise-io/steps-download-and-activate-osx-certificate-private-key.git "${_TMP_cert_handler_dir_path}"
+(
+	cd "${_TMP_cert_handler_dir_path}"
+	export STEP_CERT_ACTIVATOR_KEYCHAIN_PSW="vagrant"
+	export STEP_CERT_ACTIVATOR_KEYCHAIN_PATH="${HOME}/Library/Keychains/login.keychain"
+	export STEP_CERT_ACTIVATOR_CERTIFICATES_DIR="${HOME}/cert_activator_certs"
+	export STEP_CERT_ACTIVATOR_CERTIFICATE_PASSPHRASE="$BITRISE_CERTIFICATE_PASSPHRASE"
+	export STEP_CERT_ACTIVATOR_CERTIFICATE_URL="$BITRISE_CERTIFICATE_URL"
+
+	bash step.sh
+)
+
+
+
 "${THIS_SCRIPT_DIR}/Crashlytics.framework/submit" "${CONFIG_api_key}" "${CONFIG_build_secret}" -ipaPath "${CONFIG_ipa_pth}" -emails "${CONFIG_emails_list}" -notesPath "${CONFIG_release_notes_pth}" -groupAliases ﻿"${CONFIG_group_aliases_list}"
 exit $?
