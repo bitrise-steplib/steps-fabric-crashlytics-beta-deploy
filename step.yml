@@ -1,43 +1,70 @@
-name: "Step Template"
+name: "Fabric / Crashlytics deployer"
 description: |
-  This is a Step template.
-  Contains everything what's required for a valid StepLib Step.
+  Deploys to Fabric / Crashlytics beta testing service.
 
-  To create your own Step:
+  ## How to setup your Xcode project for Fabric / Crashlytics beta testing?
 
-  1. Create a new repository on GitHub
-  2. Copy the files from this repository into your repository
-  3. Commit and push it
-
-  Hurray, you just created your first Step repository!
-  You can now start coding and when you're ready
-  you can submit your Step to the [Open Step Library](http://www.steplib.com/).
-website: http://www.steplib.com/
-fork_url: https://github.com/steplib/step-template
+  * Register a Fabric account at [https://get.fabric.io/](https://get.fabric.io/).
+  * Add Fabric & Crashlytics to your Xcode project as described when you first sign into your Fabric account
+  * After your first Fabric & Crashlytics app setup the app should be listed on [https://fabric.io](https://fabric.io)
+  * You should also test that everything works correctly with a manual version upload: just Create an Archive in Xcode and if the Fabric menu bar app is running it'll show an upload popup
+website: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
+fork_url: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
 source:
-  git: https://github.com/steplib/step-template.git
+  git: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy.git
 host_os_tags:
-  - "osx-10.9"
   - "osx-10.10"
-project_type_tags: []
+project_type_tags:
+  - "ios"
 type_tags:
-  - "template"
-  - "sample"
+  - "deploy"
 is_requires_admin_user: false
 inputs:
-  - 
-    mapped_to: EXAMPLE_INPUT_NAME
-    title: "Your name"
+  -
+    mapped_to: STEP_CRASHLYTICS_API_KEY
+    title: "Fabric: API Key"
     description: |
-      *This is an example input.*
+      You can get your API Key under **Organizations**
+      at [https://fabric.io/settings](https://fabric.io/settings).
 
-      The value the user specifies
-      for this input field will be automatically
-      available as environment variable `$EXAMPLE_INPUT_NAME`
-      when this Step runs through a StepLib system.
+      Select the organization your app belongs to
+      and at the top you'll see a text: **API Key**.
+      Click it and the API key will appear.
     is_required: true
     is_expand: false
-    value: "optional, default value for the input field"
-    value_options: []
-    is_dont_change_value: false
+  -
+    mapped_to: STEP_CRASHLYTICS_BUILD_SECRET
+    title: "Fabric: Build Secret"
+    description: |
+      You can get the Build Secret key on the same
+      page as the API Key.
+
+      Select the **Organizations** option
+      at [https://fabric.io/settings](https://fabric.io/settings).
+
+      Select the organization your app belongs to
+      and at the top you'll see a text: **Build Secret**.
+      Click it and the Build Secret will appear.
+    is_required: true
+    is_expand: false
+  - 
+    mapped_to: STEP_CRASHLYTICS_IPA_PATH
+    title: "IPA file path"
+    is_expand: true
+    is_required: true
+  - 
+    mapped_to: STEP_CRASHLYTICS_EMAIL_LIST
+    title: "Notify: Emails"
+    is_expand: false
+    is_required: true
+  - 
+    mapped_to: STEP_CRASHLYTICS_GROUP_ALIASES_LIST
+    title: "Notify: Group Aliases"
+    is_expand: false
+    is_required: true
+  - 
+    mapped_to: STEP_CRASHLYTICS_RELEASE_NOTES
+    title: "Release Notes"
+    is_expand: false
+    is_required: false
 outputs: []
