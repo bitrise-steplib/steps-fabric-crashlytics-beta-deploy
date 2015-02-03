@@ -26,7 +26,14 @@ git clone https://github.com/bitrise-io/steps-download-and-activate-osx-certific
 	bash step.sh
 )
 
+if [ ! -z "${CONFIG_group_aliases_list}" ] ; then
+	_param_groups='-groupAliases ﻿"${CONFIG_group_aliases_list}"'
+fi
 
-
-"${THIS_SCRIPT_DIR}/Crashlytics.framework/submit" "${CONFIG_api_key}" "${CONFIG_build_secret}" -ipaPath "${CONFIG_ipa_pth}" -emails "${CONFIG_emails_list}" -notesPath "${CONFIG_release_notes_pth}" -groupAliases ﻿"${CONFIG_group_aliases_list}"
+"${THIS_SCRIPT_DIR}/Crashlytics.framework/submit" \
+	"${CONFIG_api_key}" "${CONFIG_build_secret}" \
+	-ipaPath "${CONFIG_ipa_pth}" \
+	-emails "${CONFIG_emails_list}" \
+	-notesPath "${CONFIG_release_notes_pth}" \
+	${_param_groups}
 exit $?
