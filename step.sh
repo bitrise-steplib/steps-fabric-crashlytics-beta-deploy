@@ -11,6 +11,8 @@ CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
 
 # STEP_CRASHLYTICS_RELEASE_NOTES -> save to file and provide path
 printf "%s" "${STEP_CRASHLYTICS_RELEASE_NOTES}" > "${CONFIG_release_notes_pth}"
+echo 'release notes:'
+cat "${CONFIG_release_notes_pth}"
 
 # TEST
 _TMP_cert_handler_dir_path="${HOME}/steps-download-and-activate-osx-certificate-private-key"
