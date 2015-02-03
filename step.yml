@@ -1,0 +1,43 @@
+name: "Step Template"
+description: |
+  This is a Step template.
+  Contains everything what's required for a valid StepLib Step.
+
+  To create your own Step:
+
+  1. Create a new repository on GitHub
+  2. Copy the files from this repository into your repository
+  3. Commit and push it
+
+  Hurray, you just created your first Step repository!
+  You can now start coding and when you're ready
+  you can submit your Step to the [Open Step Library](http://www.steplib.com/).
+website: http://www.steplib.com/
+fork_url: https://github.com/steplib/step-template
+source:
+  git: https://github.com/steplib/step-template.git
+host_os_tags:
+  - "osx-10.9"
+  - "osx-10.10"
+project_type_tags: []
+type_tags:
+  - "template"
+  - "sample"
+is_requires_admin_user: false
+inputs:
+  - 
+    mapped_to: EXAMPLE_INPUT_NAME
+    title: "Your name"
+    description: |
+      *This is an example input.*
+
+      The value the user specifies
+      for this input field will be automatically
+      available as environment variable `$EXAMPLE_INPUT_NAME`
+      when this Step runs through a StepLib system.
+    is_required: true
+    is_expand: false
+    value: "optional, default value for the input field"
+    value_options: []
+    is_dont_change_value: false
+outputs: []
