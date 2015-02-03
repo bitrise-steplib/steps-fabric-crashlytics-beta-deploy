@@ -61,17 +61,19 @@ fi
 fail_if_cmd_error "Failed to Activate the Certificate Private Key!"
 
 
+write_section_to_formatted_output "# Submitting..."
+
 #
 # - Release Notes: save to file
 CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
 printf "%s" "${STEP_CRASHLYTICS_RELEASE_NOTES}" > "${CONFIG_release_notes_pth}"
 
 
-if [ ! -z "${CONFIG_emails_list}" ] ; then
-	_param_emails='-emails "${CONFIG_emails_list}"'
+if [ ! -z "${STEP_CRASHLYTICS_EMAIL_LIST}" ] ; then
+	_param_emails='-emails "${STEP_CRASHLYTICS_EMAIL_LIST}"'
 fi
-if [ ! -z "${CONFIG_group_aliases_list}" ] ; then
-	_param_groups='-groupAliases ﻿"${CONFIG_group_aliases_list}"'
+if [ ! -z "${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}" ] ; then
+	_param_groups='-groupAliases ﻿"${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}"'
 fi
 
 #
