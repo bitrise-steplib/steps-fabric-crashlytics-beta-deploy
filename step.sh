@@ -10,6 +10,7 @@ CONFIG_group_aliases_list="${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}"
 CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
 
 # STEP_CRASHLYTICS_RELEASE_NOTES -> save to file and provide path
+echo "STEP_CRASHLYTICS_RELEASE_NOTES: ${STEP_CRASHLYTICS_RELEASE_NOTES}"
 printf "%s" "${STEP_CRASHLYTICS_RELEASE_NOTES}" > "${CONFIG_release_notes_pth}"
 echo 'release notes:'
 cat "${CONFIG_release_notes_pth}"
