@@ -69,6 +69,15 @@ inputs:
     is_expand: false
     is_required: false
   - 
+    mapped_to: STEP_CRASHLYTICS_NOTIFICATION
+    title: "Notify testers"
+    description: |
+      Enables / disables email notification to testers
+    is_expand: false
+    is_required: false
+    value: "Yes"
+    value_options: ["Yes", "No"]
+  - 
     mapped_to: STEP_CRASHLYTICS_RELEASE_NOTES
     title: "Release Notes"
     is_expand: false
