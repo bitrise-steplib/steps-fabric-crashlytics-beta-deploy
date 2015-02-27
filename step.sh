@@ -75,6 +75,10 @@ fi
 if [ ! -z "${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}" ] ; then
 	_param_groups="-groupAliases ﻿\"${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}\""
 fi
+if [ ! -z "${STEP_CRASHLYTICS_NOTIFICATION}" ] ; then
+	_param_notifications="-notifications \"$(echo ${STEP_CRASHLYTICS_NOTIFICATION} | tr "[:lower:]" "[:upper:]")
+\""
+fi
 
 #
 # - Submit
@@ -83,7 +87,8 @@ print_and_do_command_exit_on_error "${THIS_SCRIPT_DIR}/Crashlytics.framework/sub
 	-ipaPath "${STEP_CRASHLYTICS_IPA_PATH}" \
 	-notesPath "${CONFIG_release_notes_pth}" \
 	${_param_emails} \
-	${_param_groups}
+	${_param_groups} \
+	${_param_notifications}
 
 
 #
