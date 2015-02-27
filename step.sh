@@ -100,17 +100,20 @@ print_and_do_command_exit_on_error "${THIS_SCRIPT_DIR}/Crashlytics.framework/sub
 write_section_to_formatted_output "# Success"
 
 write_section_to_formatted_output "## Notified testers"
-if [ -z "${STEP_CRASHLYTICS_EMAIL_LIST}" ] ; then
-	echo_string_to_formatted_output "* No email list provided"
+if [[ "${CONFIG_is_send_notifications}" == "NO" ]] ; then
+	echo_string_to_formatted_output "* You disabled notification sending for this deploy"
 else
-	echo_string_to_formatted_output "* Emails: ${STEP_CRASHLYTICS_EMAIL_LIST}"
+	if [ -z "${STEP_CRASHLYTICS_EMAIL_LIST}" ] ; then
+		echo_string_to_formatted_output "* No email list provided"
+	else
+		echo_string_to_formatted_output "* Emails: ${STEP_CRASHLYTICS_EMAIL_LIST}"
+	fi
+	if [ -z "${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}" ] ; then
+		echo_string_to_formatted_output "* No groups provided"
+	else
+		echo_string_to_formatted_output "* Groups: ${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}"
+	fi
 fi
-if [ -z "${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}" ] ; then
-	echo_string_to_formatted_output "* No groups provided"
-else
-	echo_string_to_formatted_output "* Groups: ${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}"
-fi
-
 
 write_section_to_formatted_output "## Release Notes"
 write_section_to_formatted_output "${STEP_CRASHLYTICS_RELEASE_NOTES}"
