@@ -70,9 +70,9 @@ inputs:
     is_required: false
   - 
     mapped_to: STEP_CRASHLYTICS_NOTIFICATION
-    title: "Notify testers"
+    title: "Notify testers?"
     description: |
-      Enables / disables email notification to testers
+      Should send email notification to testers about the new release?
     is_expand: false
     is_required: false
     value: "Yes"
