@@ -68,6 +68,8 @@ write_section_to_formatted_output "# Submitting..."
 CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
 printf "%s" "${STEP_CRASHLYTICS_RELEASE_NOTES}" > "${CONFIG_release_notes_pth}"
 
+#
+# - Optional params
 
 if [ ! -z "${STEP_CRASHLYTICS_EMAIL_LIST}" ] ; then
 	_param_emails="-emails \"${STEP_CRASHLYTICS_EMAIL_LIST}\""
@@ -75,10 +77,12 @@ fi
 if [ ! -z "${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}" ] ; then
 	_param_groups="-groupAliases ﻿\"${STEP_CRASHLYTICS_GROUP_ALIASES_LIST}\""
 fi
-if [ ! -z "${STEP_CRASHLYTICS_NOTIFICATION}" ] ; then
-	_param_notifications="-notifications \"$(echo ${STEP_CRASHLYTICS_NOTIFICATION} | tr "[:lower:]" "[:upper:]")
-\""
+
+CONFIG_is_send_notifications="YES"
+if [[ "${STEP_CRASHLYTICS_NOTIFICATION}" == "No" ]] ; then
+	CONFIG_is_send_notifications="NO"
 fi
+
 
 #
 # - Submit
@@ -86,9 +90,9 @@ print_and_do_command_exit_on_error "${THIS_SCRIPT_DIR}/Crashlytics.framework/sub
 	"${STEP_CRASHLYTICS_API_KEY}" "${STEP_CRASHLYTICS_BUILD_SECRET}" \
 	-ipaPath "${STEP_CRASHLYTICS_IPA_PATH}" \
 	-notesPath "${CONFIG_release_notes_pth}" \
+	-notifications "${CONFIG_is_send_notifications}" \
 	${_param_emails} \
-	${_param_groups} \
-	${_param_notifications}
+	${_param_groups}
 
 
 #
