@@ -2,6 +2,9 @@
 
 Deploys to Fabric / Crashlytics beta testing service
 
+**Included Crashlytics.framework version:**
+
+* `Crashlytics.framework/submit`: 1.3.5 (15)
 
 ## Create your own Step:
 
