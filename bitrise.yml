@@ -4,21 +4,18 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
   # define these in your .bitrise.secrets.yml
-  - api_key:
-  - build_secret:
-  - ipa_path:
+  - BITRISE_IPA_PATH:
+  - CRASHLYTICS_API_KEY:
+  - CRASHLYTICS_BUILD_SECRET:
   - email_list:
   - group_aliases_list:
-  - notification:
-  - release_notes:
-  - certificate_url:
-  - certificate_passphrase:
-  - certificate_dir:
-  - keychain_path:
-  - keychain_psw:
 
 workflows:
   test:
     steps:
     - path::./:
         inputs:
+        - api_key: $CRASHLYTICS_API_KEY
+        - build_secret: $CRASHLYTICS_BUILD_SECRET
+        - notification: "Yes"
+        - release_notes: "Automatic build with Bitrise"

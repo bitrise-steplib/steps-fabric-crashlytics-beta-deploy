@@ -52,15 +52,6 @@ if [ ! -f "${ipa_path}" ] ; then
 	exit 1
 fi	
 
-#
-# - Activate the Certificate
-(
-	print_and_do_command_exit_on_error cd "${THIS_SCRIPT_DIR}/cert_activator"
-	print_and_do_command_exit_on_error bash step.sh
-)
-fail_if_cmd_error "Failed to Activate the Certificate Private Key!"
-
-
 write_section_to_formatted_output "# Submitting..."
 
 #

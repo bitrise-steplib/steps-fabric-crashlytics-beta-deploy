@@ -57,7 +57,7 @@ inputs:
       is_required: true
       is_expand: false
       is_dont_change_value: false
-  - ipa_path: ""
+  - ipa_path: "$BITRISE_IPA_PATH"
     opts:
       title: "IPA file path"
       summary: ""
@@ -76,14 +76,14 @@ inputs:
       is_dont_change_value: false
   - group_aliases_list: ""
     opts:
-    title: "Notify: Group Aliases"
-    summary: ""
-    description: |-
-      Optional list of group aliases from web dashboard (comma-separated)
-    is_expand: false
-    is_required: false
-    is_dont_change_value: false
-  - notification: "yes"
+      title: "Notify: Group Aliases"
+      summary: ""
+      description: |-
+        Optional list of group aliases from web dashboard (comma-separated)
+      is_expand: false
+      is_required: false
+      is_dont_change_value: false
+  - notification: "Yes"
     opts:
       title: "Notify testers?"
       summary: ""
@@ -93,55 +93,12 @@ inputs:
       is_expand: false
       is_required: true
       is_dont_change_value: false
-  - release_notes: ""
+  - release_notes: "Automatic build with Bitrise"
     opts:
       title: "Release Notes"
       summary: ""
       description: ""
       is_expand: false
       is_required: false
-      is_dont_change_value: false
-  - certificate_url: ""
-    opts:
-      title: "Certificate Private Key file URL"
-      summary: ""
-      description: |-
-        .p12 Private Key file's URL
-      is_required: true
-      is_expand: true
-      is_dont_change_value: false
-  - certificate_passphrase: ""
-    opts:
-      title: "Certificate Private Key file Passphrase"
-      summary: ""
-      description: |-
-        .p12 Private Key file's Passphrase
-      is_required: false
-      is_expand: true
-      is_dont_change_value: false
-  - certificate_dir: ""${HOME}/cert_activator_certs""
-    opts:
-      title: "Certificates Directory Path"
-      summary: ""
-      description: |
-        Directory where this step stores the Certificate Private Key (.p12).
-      is_expand: true
-      is_required: true
-      is_dont_change_value: false
-  - keychain_path: ""${HOME}/Library/Keychains/login.keychain""
-    opts:
-      title: "Keychain Path"
-      summary: ""
-      description: ""
-      is_expand: true
-      is_required: true
-      is_dont_change_value: false
-  - keychain_psw: ""
-    opts:
-      title: "Keychain Password / passphrase"
-      summary: ""
-      description: ""
-      is_expand: false
-      is_required: true
       is_dont_change_value: false
 outputs: []
