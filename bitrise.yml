@@ -1,0 +1,24 @@
+format_version: 0.9.10
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+app:
+  envs:
+  # define these in your .bitrise.secrets.yml
+  - api_key:
+  - build_secret:
+  - ipa_path:
+  - email_list:
+  - group_aliases_list:
+  - notification:
+  - release_notes:
+  - certificate_url:
+  - certificate_passphrase:
+  - certificate_dir:
+  - keychain_path:
+  - keychain_psw:
+
+workflows:
+  test:
+    steps:
+    - path::./:
+        inputs:

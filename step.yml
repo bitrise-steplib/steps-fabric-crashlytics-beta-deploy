@@ -1,5 +1,6 @@
-name: "Fabric / Crashlytics deployer"
-description: |
+title: "Fabric / Crashlytics deployer"
+summary: "Fabric / Crashlytics deployer"
+description: |-
   Deploys to Fabric / Crashlytics beta testing service.
 
   ## How to setup your Xcode project for [Fabric](https://get.fabric.io/) / Crashlytics beta testing?
@@ -11,9 +12,8 @@ description: |
 
   Your app is now ready to be deployed with this Step!
 website: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
-fork_url: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
-source:
-  git: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy.git
+source_code_url: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
+support_url: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy/issues
 host_os_tags:
   - "osx-10.10"
 project_type_tags:
@@ -21,98 +21,127 @@ project_type_tags:
 type_tags:
   - "deploy"
 is_requires_admin_user: false
+is_always_run: false
+is_skippable: false
+dependencies: []
+run_if: ""
 inputs:
-  -
-    mapped_to: STEP_CRASHLYTICS_API_KEY
-    title: "Fabric: API Key"
-    description: |
-      You can get your API Key under **Organizations**
-      at [https://fabric.io/settings](https://fabric.io/settings).
+  - api_key: ""
+    opts:
+      title: "Fabric: API Key"
+      summary: ""
+      description: |-
+        You can get your API Key under **Organizations**
+        at [https://fabric.io/settings](https://fabric.io/settings).
 
-      Select the organization your app belongs to
-      and at the top you'll see a text: **API Key**.
-      Click it and the API key will appear.
-    is_required: true
-    is_expand: false
-  -
-    mapped_to: STEP_CRASHLYTICS_BUILD_SECRET
-    title: "Fabric: Build Secret"
-    description: |
-      You can get the Build Secret key on the same
-      page as the API Key.
+        Select the organization your app belongs to
+        and at the top you'll see a text: **API Key**.
+        Click it and the API key will appear.
+      is_required: true
+      is_expand: false
+      is_dont_change_value: false
+  - build_secret: ""
+    opts:
+      title: "Fabric: Build Secret"
+      summary: ""
+      description: |-
+        You can get the Build Secret key on the same
+        page as the API Key.
 
-      Select the **Organizations** option
-      at [https://fabric.io/settings](https://fabric.io/settings).
+        Select the **Organizations** option
+        at [https://fabric.io/settings](https://fabric.io/settings).
 
-      Select the organization your app belongs to
-      and at the top you'll see a text: **Build Secret**.
-      Click it and the Build Secret will appear.
-    is_required: true
-    is_expand: false
-  - 
-    mapped_to: STEP_CRASHLYTICS_IPA_PATH
-    title: "IPA file path"
-    is_expand: true
-    is_required: true
-  - 
-    mapped_to: STEP_CRASHLYTICS_EMAIL_LIST
-    title: "Notify: Emails"
-    description: |
-      Optional list of individual addresses (comma-separated)﻿
-    is_expand: false
-    is_required: false
-  - 
-    mapped_to: STEP_CRASHLYTICS_GROUP_ALIASES_LIST
+        Select the organization your app belongs to
+        and at the top you'll see a text: **Build Secret**.
+        Click it and the Build Secret will appear.
+      is_required: true
+      is_expand: false
+      is_dont_change_value: false
+  - ipa_path: ""
+    opts:
+      title: "IPA file path"
+      summary: ""
+      description: ""
+      is_expand: true
+      is_required: true
+      is_dont_change_value: false
+  - email_list: ""
+    opts:
+      title: "Notify: Emails"
+      summary: ""
+      description: |
+        Optional list of individual addresses (comma-separated)﻿
+      is_expand: false
+      is_required: false
+      is_dont_change_value: false
+  - group_aliases_list: ""
+    opts:
     title: "Notify: Group Aliases"
-    description: |
+    summary: ""
+    description: |-
       Optional list of group aliases from web dashboard (comma-separated)
     is_expand: false
     is_required: false
-  - 
-    mapped_to: STEP_CRASHLYTICS_NOTIFICATION
-    title: "Notify testers?"
-    description: |
-      Should send email notification to testers about the new release?
-    is_expand: false
-    is_required: true
-    value: "Yes"
-    value_options: ["Yes", "No"]
-  - 
-    mapped_to: STEP_CRASHLYTICS_RELEASE_NOTES
-    title: "Release Notes"
-    is_expand: false
-    is_required: false
-  - 
-    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATE_URL
-    title: "Certificate Private Key file URL"
-    description: |
-      .p12 Private Key file's URL
-    is_required: true
-    is_expand: true
-  - 
-    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATE_PASSPHRASE
-    title: "Certificate Private Key file Passphrase"
-    description: |
-      .p12 Private Key file's Passphrase
-    is_required: false
-    is_expand: true
-  -
-    mapped_to: STEP_CERT_ACTIVATOR_CERTIFICATES_DIR
-    title: "Certificates Directory Path"
-    description: |
-      Directory where this step stores the Certificate Private Key (.p12).
-    value: "${HOME}/cert_activator_certs"
-    is_expand: true
-    is_required: true
-  -
-    mapped_to: STEP_CERT_ACTIVATOR_KEYCHAIN_PATH
-    title: "Keychain Path"
-    value: "${HOME}/Library/Keychains/login.keychain"
-    is_expand: true
-    is_required: true
-  -
-    mapped_to: STEP_CERT_ACTIVATOR_KEYCHAIN_PSW
-    title: "Keychain Password / passphrase"
-    is_expand: false
-    is_required: true
+    is_dont_change_value: false
+  - notification: "yes"
+    opts:
+      title: "Notify testers?"
+      summary: ""
+      description: |-
+        Should send email notification to testers about the new release?
+      value_options: ["Yes", "No"]
+      is_expand: false
+      is_required: true
+      is_dont_change_value: false
+  - release_notes: ""
+    opts:
+      title: "Release Notes"
+      summary: ""
+      description: ""
+      is_expand: false
+      is_required: false
+      is_dont_change_value: false
+  - certificate_url: ""
+    opts:
+      title: "Certificate Private Key file URL"
+      summary: ""
+      description: |-
+        .p12 Private Key file's URL
+      is_required: true
+      is_expand: true
+      is_dont_change_value: false
+  - certificate_passphrase: ""
+    opts:
+      title: "Certificate Private Key file Passphrase"
+      summary: ""
+      description: |-
+        .p12 Private Key file's Passphrase
+      is_required: false
+      is_expand: true
+      is_dont_change_value: false
+  - certificate_dir: ""${HOME}/cert_activator_certs""
+    opts:
+      title: "Certificates Directory Path"
+      summary: ""
+      description: |
+        Directory where this step stores the Certificate Private Key (.p12).
+      is_expand: true
+      is_required: true
+      is_dont_change_value: false
+  - keychain_path: ""${HOME}/Library/Keychains/login.keychain""
+    opts:
+      title: "Keychain Path"
+      summary: ""
+      description: ""
+      is_expand: true
+      is_required: true
+      is_dont_change_value: false
+  - keychain_psw: ""
+    opts:
+      title: "Keychain Password / passphrase"
+      summary: ""
+      description: ""
+      is_expand: false
+      is_required: true
+      is_dont_change_value: false
 outputs: []
