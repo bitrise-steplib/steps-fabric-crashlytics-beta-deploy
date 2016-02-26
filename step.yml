@@ -41,7 +41,7 @@ inputs:
         and at the top you'll see a text: **API Key**.
         Click it and the API key will appear.
       is_required: true
-      is_expand: false
+      is_expand: true
       is_dont_change_value: false
   - build_secret: ""
     opts:
@@ -58,7 +58,7 @@ inputs:
         and at the top you'll see a text: **Build Secret**.
         Click it and the Build Secret will appear.
       is_required: true
-      is_expand: false
+      is_expand: true
       is_dont_change_value: false
   - ipa_path: "$BITRISE_IPA_PATH"
     opts:
@@ -74,7 +74,7 @@ inputs:
       summary: ""
       description: |
         Optional list of individual addresses (comma-separated)﻿
-      is_expand: false
+      is_expand: true
       is_required: false
       is_dont_change_value: false
   - group_aliases_list: ""
@@ -83,7 +83,7 @@ inputs:
       summary: ""
       description: |-
         Optional list of group aliases from web dashboard (comma-separated)
-      is_expand: false
+      is_expand: true
       is_required: false
       is_dont_change_value: false
   - notification: "Yes"
@@ -93,7 +93,7 @@ inputs:
       description: |-
         Should send email notification to testers about the new release?
       value_options: ["Yes", "No"]
-      is_expand: false
+      is_expand: true
       is_required: true
       is_dont_change_value: false
   - release_notes: "Automatic build with Bitrise"
@@ -101,7 +101,7 @@ inputs:
       title: "Release Notes"
       summary: ""
       description: ""
-      is_expand: false
+      is_expand: true
       is_required: false
       is_dont_change_value: false
 outputs: []
