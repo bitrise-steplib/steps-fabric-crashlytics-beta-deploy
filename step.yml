@@ -41,8 +41,6 @@ inputs:
         and at the top you'll see a text: **API Key**.
         Click it and the API key will appear.
       is_required: true
-      is_expand: true
-      is_dont_change_value: false
   - build_secret: ""
     opts:
       title: "Fabric: Build Secret"
@@ -58,34 +56,24 @@ inputs:
         and at the top you'll see a text: **Build Secret**.
         Click it and the Build Secret will appear.
       is_required: true
-      is_expand: true
-      is_dont_change_value: false
   - ipa_path: "$BITRISE_IPA_PATH"
     opts:
       title: "IPA file path"
       summary: ""
       description: ""
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - email_list: ""
     opts:
       title: "Notify: Emails"
       summary: ""
       description: |
         Optional list of individual addresses (comma-separated)﻿
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - group_aliases_list: ""
     opts:
       title: "Notify: Group Aliases"
       summary: ""
       description: |-
         Optional list of group aliases from web dashboard (comma-separated)
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - notification: "Yes"
     opts:
       title: "Notify testers?"
@@ -93,15 +81,10 @@ inputs:
       description: |-
         Should send email notification to testers about the new release?
       value_options: ["Yes", "No"]
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - release_notes: "Automatic build with Bitrise"
     opts:
       title: "Release Notes"
       summary: ""
       description: ""
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
 outputs: []
