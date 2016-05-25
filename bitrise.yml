@@ -4,11 +4,10 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
   # define these in your .bitrise.secrets.yml
-  - BITRISE_IPA_PATH:
-  - CRASHLYTICS_API_KEY:
-  - CRASHLYTICS_BUILD_SECRET:
-  - email_list:
-  - group_aliases_list:
+  - BITRISE_IPA_PATH: $BITRISE_IPA_PATH
+  - BITRISE_DSYM_PATH: $BITRISE_DSYM_PATH
+  - CRASHLYTICS_API_KEY: $CRASHLYTICS_API_KEY
+  - CRASHLYTICS_BUILD_SECRET: $CRASHLYTICS_BUILD_SECRET
 
 workflows:
   # ----------------------------------------------------------------
@@ -19,8 +18,6 @@ workflows:
         inputs:
         - api_key: $CRASHLYTICS_API_KEY
         - build_secret: $CRASHLYTICS_BUILD_SECRET
-        - notification: "Yes"
-        - release_notes: "Automatic build with Bitrise"
 
   # ----------------------------------------------------------------
   # --- workflow to Release a new version with auto version bump

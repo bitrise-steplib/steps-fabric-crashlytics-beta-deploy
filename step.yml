@@ -62,6 +62,14 @@ inputs:
       summary: ""
       description: ""
       is_required: true
+  - dsym_path: "$BITRISE_DSYM_PATH"
+    opts:
+      title: "dSYM zip file path"
+      description: |-
+        To turn on dSYM generation open your Xcode project,
+        select *Project Settings - Build Settings - Debug Information Format*
+        and make sure it's set to the *DWARF with dSYM File* option.
+        After dsym generated, zip it and provide the zipped path as input.
   - email_list: ""
     opts:
       title: "Notify: Emails"

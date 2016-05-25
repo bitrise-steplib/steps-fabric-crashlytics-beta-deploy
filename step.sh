@@ -1,71 +1,114 @@
 #!/bin/bash
 
 THIS_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-# load bash utils
-source "${THIS_SCRIPT_DIR}/bash_utils/utils.sh"
-source "${THIS_SCRIPT_DIR}/bash_utils/formatted_output.sh"
 
-# init the formatted output
-echo "" >> "${formatted_output_file_path}"
+#=======================================
+# Functions
+#=======================================
 
-# ------------------------------
-# --- Error Cleanup
+RESTORE='\033[0m'
+RED='\033[00;31m'
+YELLOW='\033[00;33m'
+BLUE='\033[00;34m'
+GREEN='\033[00;32m'
 
-function finalcleanup {
-  echo "-> finalcleanup"
-  local fail_msg="$1"
-
-  write_section_to_formatted_output "# Error"
-  if [ ! -z "${fail_msg}" ] ; then
-    write_section_to_formatted_output "**Error Description**:"
-    write_section_to_formatted_output "${fail_msg}"
-  fi
-  write_section_to_formatted_output "*See the logs for more information*"
+function color_echo {
+	color=$1
+	msg=$2
+	echo -e "${color}${msg}${RESTORE}"
 }
 
-function CLEANUP_ON_ERROR_FN {
-  local err_msg="$1"
-  finalcleanup "${err_msg}"
+function echo_fail {
+	msg=$1
+	echo
+	color_echo "${RED}" "${msg}"
+	exit 1
 }
-set_error_cleanup_function CLEANUP_ON_ERROR_FN
 
+function echo_warn {
+	msg=$1
+	color_echo "${YELLOW}" "${msg}"
+}
 
-# ------------------------------
-# --- Main
+function echo_info {
+	msg=$1
+	echo
+	color_echo "${BLUE}" "${msg}"
+}
+
+function echo_details {
+	msg=$1
+	echo "  ${msg}"
+}
+
+function echo_done {
+	msg=$1
+	color_echo "${GREEN}" "  ${msg}"
+}
+
+function validate_required_input {
+	key=$1
+	value=$2
+	if [ -z "${value}" ] ; then
+		echo_fail "Missing required input: ${key}"
+	fi
+}
+
+function validate_required_input_with_options {
+	key=$1
+	value=$2
+	options=$3
+
+	validate_required_input "${key}" "${value}"
+
+	found="0"
+	for option in "${options[@]}" ; do
+		if [ "${option}" == "${value}" ] ; then
+			found="1"
+		fi
+	done
+
+	if [ "${found}" == "0" ] ; then
+		echo_fail "Invalid input: (${key}) value: (${value}), valid options: ($( IFS=$", "; echo "${options[*]}" ))"
+	fi
+}
+
+#=======================================
+# Main
+#=======================================
 
 #
-# - Required Params
-if [ -z "${api_key}" ] ; then
-	finalcleanup '* Required input `$api_key` not provided!'
-	exit 1
-fi
-if [ -z "${build_secret}" ] ; then
-	finalcleanup '* Required input `$build_secret` not provided!'
-	exit 1
-fi
-if [ -z "${ipa_path}" ] ; then
-	finalcleanup '* Required input `$ipa_path` not provided!'
-	exit 1
-fi
+# Validate parameters
+echo_info "Configs:"
+echo_details "* api_key: ***"
+echo_details "* build_secret: ***"
+echo_details "* ipa_path: $ipa_path"
+echo_details "* dsym_path: $dsym_path"
+echo_details "* email_list: $email_list"
+echo_details "* group_aliases_list: $group_aliases_list"
+echo_details "* notification: $notification"
+echo_details "* release_notes: $release_notes"
+
+echo
+
+validate_required_input "api_key" $api_key
+validate_required_input "build_secret" $build_secret
+validate_required_input "ipa_path" $ipa_path
+
 if [ ! -f "${ipa_path}" ] ; then
-	finalcleanup "* IPA path defined but the file does not exist at path: ${ipa_path}"
-	exit 1
-fi	
+	echo_fail "IPA path defined but the file does not exist at path: ${ipa_path}"
+fi
 
-write_section_to_formatted_output "# Submitting..."
-
-#
 # - Release Notes: save to file
 CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
 printf "%s" "${release_notes}" > "${CONFIG_release_notes_pth}"
 
-#
 # - Optional params
-
-if [ ! -z "${email_list}" ] ; then
+if [ -n "${email_list}" ] ; then
 	_param_emails="-emails \"${email_list}\""
 fi
-if [ ! -z "${group_aliases_list}" ] ; then
+
+if [ -n "${group_aliases_list}" ] ; then
 	_param_groups="-groupAliases ﻿\"${group_aliases_list}\""
 fi
 
@@ -75,36 +118,44 @@ if [[ "${notification}" == "No" ]] ; then
 fi
 
 
-#
-# - Submit
-print_and_do_command_exit_on_error "${THIS_SCRIPT_DIR}/Crashlytics.framework/submit" \
-	"${api_key}" "${build_secret}" \
-	-ipaPath "${ipa_path}" \
-	-notesPath "${CONFIG_release_notes_pth}" \
-	-notifications "${CONFIG_is_send_notifications}" \
-	${_param_emails} \
-	${_param_groups}
+# - Submit IPA
+echo_info "Submitting IPA..."
 
+submit_cmd="${THIS_SCRIPT_DIR}/Fabric/submit"
+submit_cmd="$submit_cmd \"${api_key}\" \"${build_secret}\""
+submit_cmd="$submit_cmd -ipaPath \"${ipa_path}\""
+submit_cmd="$submit_cmd -notesPath \"${CONFIG_release_notes_pth}\""
+submit_cmd="$submit_cmd -notifications \"${CONFIG_is_send_notifications}\""
+submit_cmd="$submit_cmd \"${_param_emails}\" \"${_param_groups}\""
 
-#
-# - Success Summary
-write_section_to_formatted_output "# Success"
+echo_details "$submit_cmd"
+echo
 
-write_section_to_formatted_output "## Notified testers"
-if [[ "${CONFIG_is_send_notifications}" == "NO" ]] ; then
-	echo_string_to_formatted_output "* You disabled notification sending for this deploy"
+eval "$submit_cmd"
+
+if [ $? -eq 0 ] ; then
+  echo_done "Success"
 else
-	if [ -z "${email_list}" ] ; then
-		echo_string_to_formatted_output "* No email list provided"
-	else
-		echo_string_to_formatted_output "* Emails: ${email_list}"
-	fi
-	if [ -z "${group_aliases_list}" ] ; then
-		echo_string_to_formatted_output "* No groups provided"
-	else
-		echo_string_to_formatted_output "* Groups: ${group_aliases_list}"
-	fi
+  echo_fail "Fail"
 fi
 
-write_section_to_formatted_output "## Release Notes"
-write_section_to_formatted_output "${release_notes}"
+# - Submit DSYM
+if [ -n "${dsym_path}" ] ; then
+  echo_info "Submitting DSYM..."
+
+  dsym_cmd="${THIS_SCRIPT_DIR}/Fabric/upload-symbols"
+  dsym_cmd="${dsym_cmd} -a \"${api_key}\""
+  dsym_cmd="${dsym_cmd} -p \"ios\""
+  dsym_cmd="${dsym_cmd} \"${dsym_path}\""
+
+  echo_details "$dsym_cmd"
+  echo
+
+  eval "$dsym_cmd"
+
+  if [ $? -eq 0 ] ; then
+    echo_done "Success"
+  else
+    echo_fail "Fail"
+  fi
+fi
