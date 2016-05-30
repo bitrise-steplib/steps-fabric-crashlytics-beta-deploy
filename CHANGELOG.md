@@ -1,6 +1,16 @@
-## Changelog (Current version: 2.0.1)
+## Changelog (Current version: 2.1.0)
 
 -----------------
+
+### 2.1.0 (2016 May 30)
+
+* [0217bd2] version bump to 2.1.0
+* [3f74590] Merge pull request #9 from bitrise-io/upload_dsym
+* [8a13d15] remove _tmp from git
+* [7be043d] gitignore _tmp
+* [1c29300] upload dsym
+* [82027f8] update framework
+* [23014b2] Merge branch 'master' of github.com:bitrise-io/steps-fabric-crashlytics-beta-deploy
 
 ### 2.0.1 (2016 Feb 26)
 
@@ -37,4 +47,4 @@
 
 -----------------
 
-Updated: 2016 Feb 26
+Updated: 2016 May 30
