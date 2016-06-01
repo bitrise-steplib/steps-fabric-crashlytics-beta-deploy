@@ -1,6 +1,12 @@
-## Changelog (Current version: 2.1.0)
+## Changelog (Current version: 2.1.1)
 
 -----------------
+
+### 2.1.1 (2016 Jun 01)
+
+* [a340c90] version bump
+* [04efc61] Merge pull request #11 from bitrise-io/submit_fix
+* [844dae4] submit fix
 
 ### 2.1.0 (2016 May 30)
 
@@ -47,4 +53,4 @@
 
 -----------------
 
-Updated: 2016 May 30
+Updated: 2016 Jun 01
