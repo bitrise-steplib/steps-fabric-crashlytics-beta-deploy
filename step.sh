@@ -126,7 +126,7 @@ submit_cmd="$submit_cmd \"${api_key}\" \"${build_secret}\""
 submit_cmd="$submit_cmd -ipaPath \"${ipa_path}\""
 submit_cmd="$submit_cmd -notesPath \"${CONFIG_release_notes_pth}\""
 submit_cmd="$submit_cmd -notifications \"${CONFIG_is_send_notifications}\""
-submit_cmd="$submit_cmd \"${_param_emails}\" \"${_param_groups}\""
+submit_cmd="$submit_cmd ${_param_emails} ${_param_groups}"
 
 echo_details "$submit_cmd"
 echo
@@ -145,7 +145,7 @@ if [ -n "${dsym_path}" ] ; then
 
   dsym_cmd="${THIS_SCRIPT_DIR}/Fabric/upload-symbols"
   dsym_cmd="${dsym_cmd} -a \"${api_key}\""
-  dsym_cmd="${dsym_cmd} -p \"ios\""
+  dsym_cmd="${dsym_cmd} -p ios"
   dsym_cmd="${dsym_cmd} \"${dsym_path}\""
 
   echo_details "$dsym_cmd"
