@@ -61,7 +61,6 @@ inputs:
       title: "IPA file path"
       summary: ""
       description: ""
-      is_required: true
   - dsym_path: "$BITRISE_DSYM_PATH"
     opts:
       title: "dSYM zip file path"
