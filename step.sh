@@ -93,54 +93,63 @@ echo
 
 validate_required_input "api_key" $api_key
 validate_required_input "build_secret" $build_secret
-validate_required_input "ipa_path" $ipa_path
 
-if [ ! -f "${ipa_path}" ] ; then
-	echo_fail "IPA path defined but the file does not exist at path: ${ipa_path}"
+if [ -z "${dsym_path}" ] && [ -z "${ipa_path}" ] ; then
+	echo_fail "No ipa_path nor dsym_path defined"
 fi
 
-# - Release Notes: save to file
-CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
-printf "%s" "${release_notes}" > "${CONFIG_release_notes_pth}"
+if [ ! -z "${ipa_path}" ] ; then
+	if [ ! -f "${ipa_path}" ] ; then
+		echo_fail "IPA path defined but the file does not exist at path: ${ipa_path}"
+	fi
 
-# - Optional params
-if [ -n "${email_list}" ] ; then
-	_param_emails="-emails \"${email_list}\""
-fi
+	# - Release Notes: save to file
+	CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
+	printf "%s" "${release_notes}" > "${CONFIG_release_notes_pth}"
 
-if [ -n "${group_aliases_list}" ] ; then
-	_param_groups="-groupAliases ﻿\"${group_aliases_list}\""
-fi
+	# - Optional params
+	if [ -n "${email_list}" ] ; then
+		_param_emails="-emails \"${email_list}\""
+	fi
 
-CONFIG_is_send_notifications="YES"
-if [[ "${notification}" == "No" ]] ; then
-	CONFIG_is_send_notifications="NO"
-fi
+	if [ -n "${group_aliases_list}" ] ; then
+		_param_groups="-groupAliases ﻿\"${group_aliases_list}\""
+	fi
+
+	CONFIG_is_send_notifications="YES"
+	if [[ "${notification}" == "No" ]] ; then
+		CONFIG_is_send_notifications="NO"
+	fi
 
 
-# - Submit IPA
-echo_info "Submitting IPA..."
+	# - Submit IPA
+	echo_info "Submitting IPA..."
 
-submit_cmd="${THIS_SCRIPT_DIR}/Fabric/submit"
-submit_cmd="$submit_cmd \"${api_key}\" \"${build_secret}\""
-submit_cmd="$submit_cmd -ipaPath \"${ipa_path}\""
-submit_cmd="$submit_cmd -notesPath \"${CONFIG_release_notes_pth}\""
-submit_cmd="$submit_cmd -notifications \"${CONFIG_is_send_notifications}\""
-submit_cmd="$submit_cmd ${_param_emails} ${_param_groups}"
+	submit_cmd="${THIS_SCRIPT_DIR}/Fabric/submit"
+	submit_cmd="$submit_cmd \"${api_key}\" \"${build_secret}\""
+	submit_cmd="$submit_cmd -ipaPath \"${ipa_path}\""
+	submit_cmd="$submit_cmd -notesPath \"${CONFIG_release_notes_pth}\""
+	submit_cmd="$submit_cmd -notifications \"${CONFIG_is_send_notifications}\""
+	submit_cmd="$submit_cmd ${_param_emails} ${_param_groups}"
 
-echo_details "$submit_cmd"
-echo
+	echo_details "$submit_cmd"
+	echo
 
-eval "$submit_cmd"
+	eval "$submit_cmd"
 
-if [ $? -eq 0 ] ; then
-  echo_done "Success"
-else
-  echo_fail "Fail"
-fi
+	if [ $? -eq 0 ] ; then
+		echo_done "Success"
+	else
+		echo_fail "Fail"
+	fi
+fi 
 
 # - Submit DSYM
-if [ -n "${dsym_path}" ] ; then
+if [ ! -z "${dsym_path}" ] ; then
+	if [ ! -e "${dsym_path}" ] ; then
+		echo_fail "DSYM path defined but the file does not exist at path: ${dsym_path}"
+	fi
+
   echo_info "Submitting DSYM..."
 
   dsym_cmd="${THIS_SCRIPT_DIR}/Fabric/upload-symbols"
