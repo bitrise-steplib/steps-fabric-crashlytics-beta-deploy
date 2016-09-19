@@ -1,6 +1,12 @@
-## Changelog (Current version: 2.1.1)
+## Changelog (Current version: 2.2.0)
 
 -----------------
+
+### 2.2.0 (2016 Sep 19)
+
+* [35842a1] bitrise.yml fix
+* [e3572c5] prepare for 2.2.0
+* [56fde28] allow to upload only dsym (#13)
 
 ### 2.1.1 (2016 Jun 01)
 
@@ -53,4 +59,4 @@
 
 -----------------
 
-Updated: 2016 Jun 01
+Updated: 2016 Sep 19
