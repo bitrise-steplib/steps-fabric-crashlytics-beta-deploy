@@ -1,6 +1,13 @@
-## Changelog (Current version: 2.2.0)
+## Changelog (Current version: 2.2.1)
 
 -----------------
+
+### 2.2.1 (2016 Oct 31)
+
+* [6a6b148] v2.2.1
+* [9c3479d] Merge pull request #15 from zittix/fix_dsym
+* [3243e32] Fixed upload-symbols binary (was the one from crashlytics framework instead of Fabric.app app)
+* [bdfd80d] Fix: Updated submit and upload-symbols to latest version
 
 ### 2.2.0 (2016 Sep 19)
 
@@ -59,4 +66,4 @@
 
 -----------------
 
-Updated: 2016 Sep 19
+Updated: 2016 Oct 31
