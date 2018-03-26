@@ -1,6 +1,11 @@
-## Changelog (Current version: 2.2.1)
+## Changelog (Current version: 2.2.2)
 
 -----------------
+
+### 2.2.2 (2018 Mar 26)
+
+* [9d128e3] prepare for 2.2.2
+* [05e099e] Update upload-symbols binary (#19)
 
 ### 2.2.1 (2016 Oct 31)
 
@@ -66,4 +71,4 @@
 
 -----------------
 
-Updated: 2016 Oct 31
+Updated: 2018 Mar 26
