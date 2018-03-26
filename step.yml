@@ -18,11 +18,15 @@ website: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
 source_code_url: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy
 support_url: https://github.com/bitrise-io/steps-fabric-crashlytics-beta-deploy/issues
 host_os_tags:
-  - "osx-10.10"
+- osx-10.10
 project_type_tags:
-  - "ios"
+- ios
+- xamarin
+- cordova
+- ionic
+- react-native
 type_tags:
-  - "deploy"
+- deploy
 is_requires_admin_user: false
 is_always_run: false
 is_skippable: false
