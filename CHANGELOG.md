@@ -1,6 +1,11 @@
-## Changelog (Current version: 2.2.2)
+## Changelog (Current version: 2.2.3)
 
 -----------------
+
+### 2.2.3 (2018 Mar 26)
+
+* [d746c07] prepare for 2.2.3
+* [d0ce800] fix project type tags (#20)
 
 ### 2.2.2 (2018 Mar 26)
 
