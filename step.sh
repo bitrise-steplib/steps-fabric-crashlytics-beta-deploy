@@ -84,6 +84,7 @@ echo_details "* api_key: ***"
 echo_details "* build_secret: ***"
 echo_details "* ipa_path: $ipa_path"
 echo_details "* dsym_path: $dsym_path"
+echo_details "* service_info_plist_path: $service_info_plist_path"
 echo_details "* email_list: $email_list"
 echo_details "* group_aliases_list: $group_aliases_list"
 echo_details "* notification: $notification"
@@ -91,14 +92,33 @@ echo_details "* release_notes: $release_notes"
 
 echo
 
-validate_required_input "api_key" $api_key
-validate_required_input "build_secret" $build_secret
-
 if [ -z "${dsym_path}" ] && [ -z "${ipa_path}" ] ; then
 	echo_fail "No ipa_path nor dsym_path defined"
 fi
 
 if [ ! -z "${ipa_path}" ] ; then
+	validate_required_input "api_key" $api_key
+	validate_required_input "build_secret" $build_secret
+fi
+
+if [ ! -z "${dsym_path}" ] ; then
+	if [ ! -f "${dsym_path}" ] ; then
+		echo_fail "DSYM path defined but the file does not exist at path: ${dsym_path}"
+	fi
+
+	if [ -z "${api_key}"] && [ -z "${service_info_plist_path}" ]; then
+		echo_fail "Either `Fabric: API Key` (api_key) or `GoogleService-Info.plist path` (service_info_plist_path) needs to specified for dSYM upload."
+	fi
+
+	if [ -z "${service_info_plist_path}" ] && [ ! -f "${service_info_plist_path}" ]; then 
+		echo_fail "GoogleService-Info.plist path specified, but file does not exist at path: ${service_info_plist_path}"
+	fi
+fi
+
+if [ ! -z "${ipa_path}" ] ; then
+	validate_required_input "api_key" $api_key
+	validate_required_input "build_secret" $build_secret
+
 	if [ ! -f "${ipa_path}" ] ; then
 		echo_fail "IPA path defined but the file does not exist at path: ${ipa_path}"
 	fi
@@ -146,14 +166,16 @@ fi
 
 # - Submit DSYM
 if [ ! -z "${dsym_path}" ] ; then
-	if [ ! -e "${dsym_path}" ] ; then
-		echo_fail "DSYM path defined but the file does not exist at path: ${dsym_path}"
-	fi
-
   echo_info "Submitting DSYM..."
 
   dsym_cmd="${THIS_SCRIPT_DIR}/Fabric/upload-symbols"
-  dsym_cmd="${dsym_cmd} -a \"${api_key}\""
+
+  if [ ! -z "${service_info_plist_path}"]; then
+	dsym_cmd="${dsym_cmd -gsp \"${service_info_plist_path}\""
+  else
+  	dsym_cmd="${dsym_cmd} -a \"${api_key}\""
+  fi
+
   dsym_cmd="${dsym_cmd} -p ios"
   dsym_cmd="${dsym_cmd} \"${dsym_path}\""
 

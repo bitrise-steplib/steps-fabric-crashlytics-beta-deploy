@@ -50,6 +50,8 @@ inputs:
       title: "Fabric: Build Secret"
       summary: ""
       description: |-
+        Required for Crashlytics Beta. Not needed for dSYM upload with upload-symbols.
+        
         You can get the Build Secret key on the same
         page as the API Key.
 
@@ -59,7 +61,7 @@ inputs:
         Select the organization your app belongs to.
         At the top, you'll see a text: **Build Secret**.
         Click it and the Build Secret will appear.
-      is_required: true
+      is_required: false
       is_sensitive: true
   - ipa_path: "$BITRISE_IPA_PATH"
     opts:
@@ -68,12 +70,21 @@ inputs:
       description: ""
   - dsym_path: "$BITRISE_DSYM_PATH"
     opts:
+      category: "dSYM upload"
       title: "dSYM zip file path"
       description: |-
         To turn on dSYM generation, open your Xcode project,
         select *Project Settings - Build Settings - Debug Information Format*
         and make sure it's set to the *DWARF with dSYM File* option.
         After dsym generated, zip it and provide the zipped path as input.
+  - service_info_plist_path: ""
+    opts:
+      category: "dSYM upload"
+      title: "GoogleService-Info.plist path"
+      description: |-
+        The path to GoogleService-Info.plist when using upload-symbols with Firebase Crashlytics.
+
+        Important: If you're working with an app that you previously linked from Fabric to Firebase Crashlytics, pass in your Fabric API Key to run the upload symbols script.
   - email_list: ""
     opts:
       title: "Notify: Emails"
