@@ -106,7 +106,7 @@ if [ ! -z "${dsym_path}" ] ; then
 		echo_fail "DSYM path defined but the file does not exist at path: ${dsym_path}"
 	fi
 
-	if [ -z "${api_key}"] && [ -z "${service_info_plist_path}" ] ; then
+	if [ -z "${api_key}" ] && [ -z "${service_info_plist_path}" ] ; then
 		echo_fail "Either `Fabric: API Key` (api_key) or `GoogleService-Info.plist path` (service_info_plist_path) needs to specified for dSYM upload."
 	fi
 
@@ -170,8 +170,8 @@ if [ ! -z "${dsym_path}" ] ; then
 
   dsym_cmd="${THIS_SCRIPT_DIR}/Fabric/upload-symbols"
 
-  if [ ! -z "${service_info_plist_path}"] ; then
-	dsym_cmd="${dsym_cmd -gsp \"${service_info_plist_path}\""
+  if [ ! -z "${service_info_plist_path}" ] ; then
+	dsym_cmd="${dsym_cmd} -gsp \"${service_info_plist_path}\""
   else
   	dsym_cmd="${dsym_cmd} -a \"${api_key}\""
   fi
