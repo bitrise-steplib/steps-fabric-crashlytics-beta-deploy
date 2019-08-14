@@ -171,6 +171,7 @@ if [ ! -z "${dsym_path}" ] ; then
   dsym_cmd="${THIS_SCRIPT_DIR}/Fabric/upload-symbols"
 
   if [ ! -z "${service_info_plist_path}" ] ; then
+	echo_info "`GoogleService-Info.plist path` (service_info_plist_path) provided, using it instead of `Fabric: API Key` (api_key)"
 	dsym_cmd="${dsym_cmd} -gsp \"${service_info_plist_path}\""
   else
   	dsym_cmd="${dsym_cmd} -a \"${api_key}\""
