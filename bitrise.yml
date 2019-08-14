@@ -4,11 +4,8 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
   - SAMPLE_APP_URL: https://github.com/bitrise-samples/iOS-Sample.git
+  - SAMPLE_APP_BRANCH: TOOL-248-firebase
 
-  - INFO_PLIST_PATH: "$BITRISE_SOURCE_DIR/iOS Sample/Info.plist"
-  - BITRISE_PROJECT_PATH: iOS Sample.xcworkspace
-  - BITRISE_SCHEME: iOS Sample
-  
   # define these in your .bitrise.secrets.yml
   - CRASHLYTICS_API_KEY: $CRASHLYTICS_API_KEY
   - CRASHLYTICS_BUILD_SECRET: $CRASHLYTICS_BUILD_SECRET
@@ -17,37 +14,63 @@ workflows:
   test:
     before_run:
     - audit-this-step
+    - checkout
+    # - test_fabric
+    - test_upload_dsym_firebase_crashlytics
+
+  test_fabric:
+    before_run:
+    - export_ipa_fabric_crashlytics
     steps:
-    - change-workdir:
-        run_if: true
-        inputs:
-        - path: "./_tmp"
-        - is_create_path: true
-    - git-clone: {}
     - path::./:
         inputs:
         - api_key: $CRASHLYTICS_API_KEY
-        - build_secret: $CRASHLYTICS_BUILD_SECRET
+        - build_secret: $CRASHLYTICS_BUILD_SECRET    
+
+  test_upload_dsym_firebase_crashlytics:
     before_run:
+    - export_ipa_firebase_crashlytics
+    steps:
+    - path::./:
+        inputs:
+        - ipa_path: ""
+        - service_info_plist_path: "firebase-crashlytics-sample/firebase-crashlytics-sample/GoogleService-Info.plist"
+
+  export_ipa_fabric_crashlytics:
+    envs:
+    - BITRISE_PROJECT_PATH: "iOS Sample.xcworkspace"
+    - BITRISE_SCHEME: "iOS Sample"
+    after_run:
     - export_ipa
 
-  export_ipa:
+  export_ipa_firebase_crashlytics:
+    envs:
+    - BITRISE_PROJECT_PATH: "firebase-crashlytics-sample/firebase-crashlytics-sample.xcworkspace"
+    - BITRISE_SCHEME: "firebase-crashlytics-sample"
+    after_run:
+    - export_ipa
+
+  checkout:
     steps:
     - script:
         inputs:
         - content: rm -rf ./_tmp
     - change-workdir:
-        run_if: true
         inputs:
         - path: "./_tmp"
         - is_create_path: true
     - script:
         inputs:
         - content: |
-            #!/bin/bash
+            #!/usr/bin/env bash
             set -ex
-            git clone $SAMPLE_APP_URL .
-    - cocoapods-install@1.8.0: {}
+            git clone $SAMPLE_APP_URL -b $SAMPLE_APP_BRANCH .
+
+  export_ipa:
+    steps:
+    - cocoapods-install@1.8.0:
+        inputs:
+        - source_root_path: $BITRISE_PROJECT_PATH/..
     - certificate-and-profile-installer@1.10.1: {}
     - xcode-archive@2.6.0:
         title: Create Archive

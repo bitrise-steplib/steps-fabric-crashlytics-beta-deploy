@@ -37,13 +37,16 @@ inputs:
       title: "Fabric: API Key"
       summary: ""
       description: |-
+        Required for Crashlytics Beta.
+        Required for Crashlytics dSYM upload with projects that use or migrated from Fabric to Firebase Crashlytics.
+
         You can get your API Key under **Organizations**
         at [https://fabric.io/settings](https://fabric.io/settings).
 
         Select the organization your app belongs to.
         At the top, you'll see a text: **API Key**.
         Click it and the API key will appear.
-      is_required: true
+      is_required: false
       is_sensitive: true
   - build_secret: ""
     opts:
