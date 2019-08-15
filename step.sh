@@ -99,6 +99,10 @@ fi
 if [ ! -z "${ipa_path}" ] ; then
 	validate_required_input "api_key" $api_key
 	validate_required_input "build_secret" $build_secret
+
+	if [ ! -f "${ipa_path}" ] ; then
+		echo_fail "IPA path defined but the file does not exist at path: ${ipa_path}"
+	fi
 fi
 
 if [ ! -z "${dsym_path}" ] ; then
@@ -116,13 +120,6 @@ if [ ! -z "${dsym_path}" ] ; then
 fi
 
 if [ ! -z "${ipa_path}" ] ; then
-	validate_required_input "api_key" $api_key
-	validate_required_input "build_secret" $build_secret
-
-	if [ ! -f "${ipa_path}" ] ; then
-		echo_fail "IPA path defined but the file does not exist at path: ${ipa_path}"
-	fi
-
 	# - Release Notes: save to file
 	CONFIG_release_notes_pth="${HOME}/app_release_notes.txt"
 	printf "%s" "${release_notes}" > "${CONFIG_release_notes_pth}"

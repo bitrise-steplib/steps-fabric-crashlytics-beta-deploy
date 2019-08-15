@@ -70,7 +70,8 @@ inputs:
     opts:
       title: "IPA file path"
       summary: ""
-      description: ""
+      description: |-
+        Set this input to empty string to perform only dSYM upload (no Crashlytics Beta deploy).
   - dsym_path: "$BITRISE_DSYM_PATH"
     opts:
       category: "dSYM upload"
