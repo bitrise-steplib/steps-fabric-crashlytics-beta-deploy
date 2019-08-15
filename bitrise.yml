@@ -3,8 +3,12 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 app:
   envs:
-  - SAMPLE_APP_URL: https://github.com/bitrise-samples/iOS-Sample.git
+  - SAMPLE_APP_FABRIC_URL: https://github.com/bitrise-samples/iOS-Sample.git
   - SAMPLE_APP_BRANCH: TOOL-248-firebase
+
+  - SAMPLE_APP_FIREBASE: https://github.com/bitrise-io/sample-apps-ios-firebase-crashlytics
+  # Needed for firebase crashlytics sample 
+  - GOOGLE_SERVICES_INFO_PLIST_PATH: ${BITRISE_SOURCE_DIR}/GoogleService-Info.plist
 
   # define these in your .bitrise.secrets.yml
   - CRASHLYTICS_API_KEY: $CRASHLYTICS_API_KEY
@@ -14,11 +18,12 @@ workflows:
   test:
     before_run:
     - audit-this-step
-    - checkout
-    # - test_fabric
+    - checkout-fabric
+    - test-fabric
+    - checkout-firebase
     - test_upload_dsym_firebase_crashlytics
 
-  test_fabric:
+  test-fabric:
     before_run:
     - export_ipa_fabric_crashlytics
     steps:
@@ -34,23 +39,9 @@ workflows:
     - path::./:
         inputs:
         - ipa_path: ""
-        - service_info_plist_path: "firebase-crashlytics-sample/firebase-crashlytics-sample/GoogleService-Info.plist"
+        - service_info_plist_path: "firebase-crashlytics-sample/GoogleService-Info.plist"
 
-  export_ipa_fabric_crashlytics:
-    envs:
-    - BITRISE_PROJECT_PATH: "iOS Sample.xcworkspace"
-    - BITRISE_SCHEME: "iOS Sample"
-    after_run:
-    - export_ipa
-
-  export_ipa_firebase_crashlytics:
-    envs:
-    - BITRISE_PROJECT_PATH: "firebase-crashlytics-sample/firebase-crashlytics-sample.xcworkspace"
-    - BITRISE_SCHEME: "firebase-crashlytics-sample"
-    after_run:
-    - export_ipa
-
-  checkout:
+  checkout-fabric:
     steps:
     - script:
         inputs:
@@ -64,13 +55,43 @@ workflows:
         - content: |
             #!/usr/bin/env bash
             set -ex
-            git clone $SAMPLE_APP_URL -b $SAMPLE_APP_BRANCH .
+            git clone $SAMPLE_APP_FABRIC_URL -b $SAMPLE_APP_BRANCH .
+
+  export_ipa_fabric_crashlytics:
+    envs:
+    - BITRISE_PROJECT_PATH: "iOS Sample.xcworkspace"
+    - BITRISE_SCHEME: "iOS Sample"
+    after_run:
+    - export_ipa
+
+  checkout-firebase:
+    steps:
+    - script:
+        inputs:
+        - content: rm -rf ./_tmp
+    - change-workdir:
+        inputs:
+        - path: "./_tmp"
+        - is_create_path: true
+    - script:
+        inputs:
+        - content: |
+            #!/usr/bin/env bash
+            set -ex
+            git clone $SAMPLE_APP_FIREBASE .
+            #Restore GoogleService-Info.plist
+            cp ${GOOGLE_SERVICES_INFO_PLIST_PATH} firebase-crashlytics-sample/
+
+  export_ipa_firebase_crashlytics:
+    envs:
+    - BITRISE_PROJECT_PATH: "firebase-crashlytics-sample.xcworkspace"
+    - BITRISE_SCHEME: "firebase-crashlytics-sample"
+    after_run:
+    - export_ipa
 
   export_ipa:
     steps:
-    - cocoapods-install@1.8.0:
-        inputs:
-        - source_root_path: $BITRISE_PROJECT_PATH/..
+    - cocoapods-install@1.8.0: {}
     - certificate-and-profile-installer@1.10.1: {}
     - xcode-archive@2.6.0:
         title: Create Archive
