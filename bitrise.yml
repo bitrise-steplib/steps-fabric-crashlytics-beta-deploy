@@ -19,18 +19,29 @@ workflows:
     before_run:
     - audit-this-step
     - checkout-fabric
-    - test-fabric
+    - test-fabric-dsym-only
+    - test-fabric-beta-deploy-and-dsym
     - checkout-firebase
     - test_upload_dsym_firebase_crashlytics
 
-  test-fabric:
+  test-fabric-dsym-only:
+    before_run:
+    - export_ipa_fabric_crashlytics
+    steps:
+    - path::./:
+        inputs:
+        - ipa_path: ""
+        - api_key: $CRASHLYTICS_API_KEY
+        - build_secret: ""
+
+  test-fabric-beta-deploy-and-dsym:
     before_run:
     - export_ipa_fabric_crashlytics
     steps:
     - path::./:
         inputs:
         - api_key: $CRASHLYTICS_API_KEY
-        - build_secret: $CRASHLYTICS_BUILD_SECRET    
+        - build_secret: $CRASHLYTICS_BUILD_SECRET  
 
   test_upload_dsym_firebase_crashlytics:
     before_run:
