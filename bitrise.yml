@@ -4,7 +4,7 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
   - SAMPLE_APP_FABRIC_URL: https://github.com/bitrise-samples/iOS-Sample.git
-  - SAMPLE_APP_BRANCH: TOOL-248-firebase
+  - SAMPLE_APP_BRANCH: master
 
   - SAMPLE_APP_FIREBASE: https://github.com/bitrise-io/sample-apps-ios-firebase-crashlytics
   # Needed for firebase crashlytics sample 
