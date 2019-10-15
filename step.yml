@@ -24,6 +24,7 @@ project_type_tags:
 - cordova
 - ionic
 - react-native
+- flutter
 type_tags:
 - deploy
 is_requires_admin_user: false
